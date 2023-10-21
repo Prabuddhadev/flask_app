@@ -1,10 +1,13 @@
-from flask_restful import Resource, request
+from flask_restful import Resource, request, abort
 from service import ConstructionData
 
 
 class ConstructionDataController(Resource):
-    def get(self):
-        return ConstructionData().get_supplier_data()
+    def get(self, vars):
+        if vars == 'suppliers':
+            return ConstructionData().get_supplier_data()
+        else:
+            abort(404, message='URL does not exist')
 
     def post(self, vars):
         params = request.get_json()
@@ -15,6 +18,4 @@ class ConstructionDataController(Resource):
         elif vars == 'submit':
             return ConstructionData().save_data(params['data'])
         else:
-            return {
-                'warning': 'url not valid'
-            }
+            abort(404, message='URL does not exist')
