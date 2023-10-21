@@ -13,7 +13,7 @@ class ConstructionData:
         construction_data = pd.read_excel('export29913.xlsx')
         suppliers = construction_data['Supplier'].dropna().replace({np.nan: None}).to_list()
         return {
-            'Supplier': suppliers
+            'Supplier': list(set(suppliers))
         }
 
     def purchase_orders(self, supplier):
@@ -22,7 +22,7 @@ class ConstructionData:
         po_numbers = construction_data[
             construction_data['Supplier'] == supplier]['PO Number'].replace({np.nan: None}).to_list()
         return {
-            'purchase_order_details': po_numbers
+            'purchase_order_details': list(set(po_numbers))
         }
 
     def get_po_details(self, purchase_ordr_num):
