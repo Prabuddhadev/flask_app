@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
-
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 import pandas as pd
 import numpy as np
 
@@ -39,19 +40,18 @@ class ConstructionData:
 
         data['description'] = data['description'][0].split(', ')
         max_length = max(len(data[key]) for key in data)
-        # Fill shorter columns with NaN (null)
         data = {key: data[key] + [''] * (max_length - len(data[key])) for key in data}
-        # Create the DataFrame
-        df = pd.DataFrame(data)
-        # Replace empty strings with NaN
-        df = df.replace('', np.nan)
-        print(data)
-        folder_path = os.path.join(os.getcwd(), 'User_data')
-        if not os.path.exists(folder_path):
-            os.makedirs(folder_path)
-        path = os.path.join(os.getcwd(), 'User_data', f"{df['name'][0].lower().replace(' ', '')}_{df['po_number'][0].replace('/', '_')}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.csv")
-        print(path)
-        df.to_csv(path, index=False)
+        uri = "mongodb+srv://prabuddhakumardwivedi:Samplepoc@cluster0.a0lgvvr.mongodb.net/?retryWrites=true&w=majority"
+        client = MongoClient(uri, server_api=ServerApi('1'))
+        db = client['parshva']
+        user_collection = db['user_data']
+        result = user_collection.insert_one(data)
+        if result.acknowledged:
+            print(result.acknowledged)
+            success = True
+        else:
+            success = False
+        client.close()
         return {
-            'success': True
+            'success': success
         }
