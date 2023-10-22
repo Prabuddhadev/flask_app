@@ -17,8 +17,8 @@ These instructions will help you get a copy of the project up and running on you
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/your-repo.git
-   cd your-repo
+   git clone https://github.com/Prabuddhadev/flask_app.git
+   cd flask_app
 2. create venv (optional)
    ```bash
    python -m venv venv
@@ -44,8 +44,8 @@ These instructions will help you get a copy of the project up and running on you
    Flask
    MongoDB
    Pandas
-   Contributing
-   Explain how others can contribute to your project, if applicable.
+### Contributing
+   feel free to contact on prabuddhadwivedi05@gmail.com to contribute.
 
 ### License
    This project is licensed under the XYZ License - see the LICENSE.md file for details.
