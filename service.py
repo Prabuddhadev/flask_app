@@ -38,16 +38,13 @@ class ConstructionData:
 
     def save_data(self, data):
 
-        data['description'] = data['description'][0].split(', ')
-        max_length = max(len(data[key]) for key in data)
-        data = {key: data[key] + [''] * (max_length - len(data[key])) for key in data}
         uri = "mongodb+srv://prabuddhakumardwivedi:Samplepoc@cluster0.a0lgvvr.mongodb.net/?retryWrites=true&w=majority"
+        data['description'] = data['description'][0].split(', ')
         client = MongoClient(uri, server_api=ServerApi('1'))
         db = client['parshva']
         user_collection = db['user_data']
         result = user_collection.insert_one(data)
         if result.acknowledged:
-            print(result.acknowledged)
             success = True
         else:
             success = False
